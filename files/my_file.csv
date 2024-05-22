@@ -1,0 +1,5 @@
+Magic Number;Month;Symbol;Entry;TP;SL;SL Type;Risk;Direction;Type;Open Time;Close Time
+110501;5;S&P 500;9 TDOM;12 TDOM;5;Percentage;0.5;Long;Short-term;11:30;11:35
+100502;5;USDJPY;22.05;22.05;2.39;Percentage;1;Short;Seasonal;23:00;18:40
+120502;5;S&P 500;PMH;23 TD;150;Points;0.25;Long;Breakout;;
+120502;5;S&P 500;PML;46 TD;150;Points;3;Long;Breakout;;
