@@ -2097,3 +2097,156 @@
 2024-05-24 18:21:12 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 18:20:00
 2024-05-24 18:21:12 [INFO] utils.logger_config: SeasonalSignal end time: 2024-05-24 18:21:00
 2024-05-24 18:21:12 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:45:53 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-05-24 19:45:53 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-05-24 19:45:53 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:45:53 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:45:53 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:45:53 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-05-24 19:45:53 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-05-24 19:45:53 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:45:53 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:45:53 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:45:53 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:45:53 [DEBUG] utils.logger_config: Stoploss type selecet Points
+2024-05-24 19:45:53 [DEBUG] utils.logger_config: Direction trade short
+2024-05-24 19:45:53 [DEBUG] utils.logger_config: Stoploss 1.0869
+2024-05-24 19:45:55 [DEBUG] utils.logger_config: Call method SeasonalSignal - get_lot_size()
+2024-05-24 19:45:55 [DEBUG] utils.logger_config: risk amount for current signal is 1998.2742
+2024-05-24 19:45:55 [INFO] utils.logger_config: risk_amount=1998.2742 | distance=299.99999999998914 | point_value=1.0
+2024-05-24 19:45:55 [CRITICAL] utils.logger_config: REQUEST TO OPEN type='Long' symbol='EURUSD' volume=6.66 price=1.0839 sl=1.0869 tp=0 deviation=50 magic=100502 comment='test'
+2024-05-24 19:45:55 [CRITICAL] utils.logger_config: 1
+2024-05-24 19:45:58 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:45:58 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:45:58 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:45:58 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:45:58 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:03 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:03 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:03 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:03 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:03 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:08 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:08 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:08 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:08 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:08 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:13 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:13 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:13 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:13 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:13 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:18 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:18 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:18 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:18 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:18 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:23 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:23 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:23 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:23 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:23 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:28 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:28 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:28 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:28 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:28 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:33 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:33 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:33 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:33 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:33 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:38 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:38 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:38 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:38 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:38 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:43 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:43 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:43 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:43 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:43 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:48 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:48 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:48 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:48 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:48 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:46:53 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:46:53 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:46:53 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:14:00
+2024-05-24 19:46:53 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:21:00
+2024-05-24 19:46:53 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:47:12 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-05-24 19:47:12 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-05-24 19:47:12 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:12 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:12 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:12 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-05-24 19:47:12 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-05-24 19:47:12 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:12 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:12 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:12 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:47:17 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:47:17 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:17 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:17 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:17 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:47:22 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:47:22 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:22 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:22 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:22 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:47:27 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:47:27 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:27 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:27 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:27 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:47:32 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:47:32 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:32 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:32 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:32 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:47:37 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:47:37 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:37 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:37 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:37 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:47:42 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:47:42 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:42 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:42 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:42 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:47:47 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:47:47 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:47 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:47 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:47 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:47:52 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:47:52 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:52 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:52 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:52 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:47:58 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:47:58 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:47:58 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:47:58 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:47:58 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:48:03 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:48:03 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:48:03 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:48:03 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:48:03 [INFO] utils.logger_config: Count seasonal strategy 4
+2024-05-24 19:48:03 [DEBUG] utils.logger_config: Stoploss type selecet Points
+2024-05-24 19:48:03 [DEBUG] utils.logger_config: Direction trade short
+2024-05-24 19:48:03 [DEBUG] utils.logger_config: Stoploss 1.0878899999999998
+2024-05-24 19:48:05 [DEBUG] utils.logger_config: Call method SeasonalSignal - get_lot_size()
+2024-05-24 19:48:05 [DEBUG] utils.logger_config: risk amount for current signal is 1998.5406
+2024-05-24 19:48:05 [INFO] utils.logger_config: risk_amount=1998.5406 | distance=299.99999999998914 | point_value=1.0
+2024-05-24 19:48:05 [CRITICAL] utils.logger_config: REQUEST TO OPEN type='Long' symbol='EURUSD' volume=6.66 price=1.08489 sl=1.0878899999999998 tp=0 deviation=50 magic=100502 comment='test'
+2024-05-24 19:48:05 [CRITICAL] utils.logger_config: 1
+2024-05-24 19:48:10 [INFO] utils.logger_config: Вызов функции on_timer
+2024-05-24 19:48:10 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-05-24 19:48:10 [INFO] utils.logger_config: SeasonalSignal time: 2024-05-24 19:48:00
+2024-05-24 19:48:10 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-24 18:49:00
+2024-05-24 19:48:10 [INFO] utils.logger_config: Count seasonal strategy 4
