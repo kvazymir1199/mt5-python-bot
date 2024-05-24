@@ -1,8 +1,10 @@
+import time
+
 import MetaTrader5 as mt5
 from datetime import datetime, timedelta
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from enum import Enum
-
+from utils import exceptions
 from utils.logger_config import logger
 
 
@@ -38,14 +40,26 @@ class BaseSignal(BaseModel):
     status: Status = Status.init
     ticket: int = None
 
+    # allowed_symbols: tuple = ()
+
+    # @field_validator("symbol")
+    # def validate_symbol(cls,v):
+    #     if v not in cls.allowed_symbols:
+    #         logger.critical(f"{v} not in {cls.allowed_symbols}")
+    #         raise exceptions.SignalSymbolNotFoundError(v)
+    #     return v
+    #
+
+
 
 class ResponseOpen(BaseModel):
+    type: str
     symbol: str
     volume: float
     price: float
     sl: float
     tp: float = 0
-    deviation: int = 20
+    deviation: int = 50
     magic: int
     comment: str = ""
 
@@ -71,13 +85,22 @@ class SeasonalSignal(BaseSignal):
     open_time_d: datetime | None = None
     close_time_d: datetime | None = None
 
+    # @field_validator("open_time")
+    # def validate_entry(cls, v: str):
+    #     result = v.split(":")
+    #
+    #     if len(result) != 2:
+    #         raise exceptions.SignalTimeStartFormatError(v)
     def __init__(self, **data):
         super().__init__(**data)
-        self.open_time_d = self.get_start_time()
-        self.close_time_d = self.get_close_time()
-
+        self.info()
 
     def info(self):
+        self.open_time_d = self.get_start_time()
+        self.close_time_d = self.get_close_time()
+        logger.info(f"Signal {self.__class__.__name__} was sucsessfuly created")
+        logger.info(f"{self.__class__.__name__} time: {self.open_time_d}")
+        logger.info(f"{self.__class__.__name__} end time: {self.close_time_d}")
         return self
 
     def get_start_time(self) -> datetime:
@@ -91,7 +114,7 @@ class SeasonalSignal(BaseSignal):
             self.entry,
             self.open_time
         )
-        start_time_with_delta = start_time + timedelta(minutes=5)
+        start_time_with_delta = start_time + timedelta(days=5)
         if current_time > start_time_with_delta:
             start_time = start_time.replace(year=start_time.year + 1)
         return start_time
@@ -108,7 +131,7 @@ class SeasonalSignal(BaseSignal):
 
         return end_time
 
-    def get_request(self, terminal) -> ResponseOpen | ResponseClose | None:
+    def get_request(self,terminal) -> ResponseOpen | ResponseClose | None:
         current_time = datetime.now()
 
         if self.status is Status.init:
@@ -120,6 +143,8 @@ class SeasonalSignal(BaseSignal):
                 return self.get_response_close()
 
     def get_response_open(self,terminal):
+        if not terminal.initialize():
+            logger.critical("No terminal connection")
         point: mt5.SymbolInfo = terminal.symbol_info(self.symbol).point
         digits = terminal.symbol_info(self.symbol).digits
 
@@ -129,24 +154,25 @@ class SeasonalSignal(BaseSignal):
         )[self.direction == OrderDirection.long]
 
 
-        sl = round(
-            self.get_stoploss(
+        sl = self.get_stoploss(
                 price,point,
                 self.direction,
                 self.sl_type
-            ),
-            digits
-        )
+            )
         distance = abs(price - sl) / point
         account_info:mt5.AccountInfo = terminal.account_info()
+        if terminal.symbol_select(self.symbol,True):
+            time.sleep(2)
         volume = self.get_lot_size(account_info,terminal.symbol_info(self.symbol),distance=distance)
 
+        order_type = ("Long", "Short")[self.direction == OrderDirection.long]
         return ResponseOpen(
+            type=order_type,
             symbol=self.symbol,
             price=price,
             sl=sl,
             volume=volume,
-            magic=12345,
+            magic=self.magic,
             comment="test"
         )
 
@@ -156,7 +182,7 @@ class SeasonalSignal(BaseSignal):
             symbol=self.symbol
         )
     def get_stoploss(self, price, points, direction, type):
-        logger.debug("Call function get.stoploss ")
+        print("DIRECTION: ",direction, "TYPE: ",type)
         if type == StoplossType.percentage:
             logger.debug("Stoploss type selecet Percentages")
             if direction == OrderDirection.long:
@@ -205,15 +231,31 @@ class SeasonalSignal(BaseSignal):
         tick_value = symbol_info.trade_tick_value
         tick_size = symbol_info.trade_tick_size
         point_value = tick_value / (tick_size / symbol_info.point)
-        lot_size = risk_amount / distance / point_value
-        return round(lot_size,2)
-        """
-        double multiplier = MathPow(
-        10, CountDigitsBeforeDecimal(SymbolInfoDouble(NULL,SYMBOL_VOLUME_MIN)));
-   return MathFloor(value * multiplier) / multiplier;
-   """
+        logger.info(f"{risk_amount=} | {distance=} | {point_value=}")
+        try:
+            lot_size = risk_amount / distance / point_value
+        except ZeroDivisionError:
+            time.sleep(30)
+            return -1
+        print(f"{symbol_info.volume_min=} | {symbol_info.volume_max=}")
+        lot_size_round = count_decimal_places(lot_size,symbol_info.volume_min)
+        print(f"INFO: {lot_size_round}")
+        return lot_size_round
 
 
+
+def count_decimal_places(number,min_lot):
+    print(min_lot)
+    precision = len(str(int(min_lot * 100)))
+    print(precision)
+    if precision == 1:
+        return float(f"{number:.2f}")
+    elif precision == 2:
+        return float(f"{number:.1f}")
+    elif precision == 3:
+        return float(int(number))
+    else:
+        raise ValueError("Precision must be 1, 2, or 3")
 
 
 class ShortTermSignal(BaseSignal):
