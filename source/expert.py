@@ -2,6 +2,7 @@ from typing import Callable, Type
 from functools import wraps
 import MetaTrader5 as mt5
 from MetaTrader5 import AccountInfo, SymbolInfo, OrderSendResult
+from pydantic import ValidationError
 
 from utils.logger_config import logger
 from pathlib import Path
@@ -145,9 +146,9 @@ class Expert:
             entry=data['Entry'],
             tp=data["TP"],
             sl=float(data['SL']),
-            sl_type=(StoplossType.percentage, StoplossType.points)[data['SL Type'] == "Points"],
+            sl_type=StoplossType.percentage if data['SL Type'] == "Percentage" else  StoplossType.points,
             risk=float(data['Risk']),
-            direction=(OrderDirection.long, OrderDirection.short)[data['Direction'] == "Short"],
+            direction= OrderDirection.long if data['Direction'] == "Long" else OrderDirection.short,
             open_time=data['Open Time'] if data['Open Time'] else None,
             close_time=data['Close Time'] if data['Close Time'] else None,
         )
@@ -159,9 +160,9 @@ class Expert:
         signal.entry = data['Entry']
         signal.tp = data["TP"]
         signal.sl = float(data['SL'])
-        signal.sl_type = (StoplossType.percentage, StoplossType.points)[data['SL Type'] == "Points"]
+        signal.sl_type = StoplossType.percentage if data['SL Type'] == "Percentage" else  StoplossType.points
         signal.risk = float(data['Risk'])
-        signal.direction = (OrderDirection.long, OrderDirection.short)[data['Direction'] == "Short"]
+        signal.direction = OrderDirection.long if data['Direction'] == "Long" else OrderDirection.short
         signal.open_time = data['Open Time'] if data['Open Time'] else None
         signal.close_time = data['Close Time'] if data['Close Time'] else None
         signal.update()
@@ -242,7 +243,7 @@ class Expert:
     def send_request(self, request: ResponseOpen) -> int | None:
         logger.critical(f"REQUEST TO OPEN {request}")
         filling_type = self.get_filling_mode(request.symbol)
-        logger.critical(f"{(mt5.ORDER_TYPE_BUY,mt5.ORDER_TYPE_SELL)[request.type == "Long"]}")
+        logger.critical(f"{mt5.ORDER_TYPE_BUY if request.type == "Long" else mt5.ORDER_TYPE_SELL}")
         r = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": request.symbol,

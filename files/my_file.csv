@@ -1,3 +1,6 @@
 Magic Number;Month;Symbol;Entry;TP;SL;SL Type;Risk;Direction;Type;Open Time;Close Time
-120502;5;EURUSD;PMH;23 TD;600;Points;1;Long;Breakout;;
-120503;5;EURUSD;PML;46 TD;600;Points;3;Long;Breakout;;
+110501;5;EURUSD;1 TDOM;12 TDOM;5;Percentage;0.5;Long;Short-term;08:30;20:45
+100502;5;EURUSD;05.05;23.05;2.39;Percentage;1;Short;Seasonal;08:30;20:45
+100501;5;EURUSD;11.05;05.07;7;Points;0.75;Long;Seasonal;08:30;20:45
+120502;5;EURUSD;PMH;23 TD;150;Points;0.25;Long;Breakout;;
+120502;5;EURUSD;PML;46 TD;150;Points;3;Long;Breakout;;
