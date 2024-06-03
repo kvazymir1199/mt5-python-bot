@@ -5,3 +5,142 @@
 2024-06-03 15:10:20 [INFO] utils.logger_config: Вызов функции on_timer
 2024-06-03 15:10:25 [INFO] utils.logger_config: Вызов функции on_timer
 2024-06-03 15:10:30 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-03 15:37:39 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-06-03 15:37:39 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-06-03 15:37:44 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-03 15:38:32 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-03 15:38:32 [CRITICAL] utils.logger_config: An error occurred: name 'ValidationError' is not defined
+2024-06-03 15:38:32 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-03 15:38:32 [CRITICAL] utils.logger_config: An error occurred: name 'ValidationError' is not defined
+2024-06-03 15:38:37 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-03 15:38:37 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-03 15:38:37 [CRITICAL] utils.logger_config: An error occurred: name 'ValidationError' is not defined
+2024-06-03 15:38:42 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-03 15:38:42 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-03 15:38:42 [CRITICAL] utils.logger_config: An error occurred: name 'ValidationError' is not defined
+2024-06-03 15:38:47 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-03 15:38:47 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-03 15:38:47 [CRITICAL] utils.logger_config: An error occurred: name 'ValidationError' is not defined
+2024-06-03 15:40:39 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-03 15:40:39 [CRITICAL] utils.logger_config: An error occurred: Symbol: S&P 500 not found in Broker symbols. Check symbol field in csv file
+2024-06-03 15:40:39 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-03 15:40:39 [CRITICAL] utils.logger_config: An error occurred: Symbol: S&P 500 not found in Broker symbols. Check symbol field in csv file
+2024-06-03 15:40:44 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-03 15:40:44 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-03 15:40:44 [CRITICAL] utils.logger_config: An error occurred: Symbol: S&P 500 not found in Broker symbols. Check symbol field in csv file
+2024-06-03 15:41:26 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-03 15:41:26 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-03 15:41:26 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-06-03 15:41:26 [INFO] utils.logger_config: SeasonalSignal time: 2025-05-05 08:30:00
+2024-06-03 15:41:26 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-23 20:45:00
+2024-06-03 15:41:26 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-03 15:41:26 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-06-03 15:41:26 [INFO] utils.logger_config: SeasonalSignal time: 2025-05-11 08:30:00
+2024-06-03 15:41:26 [INFO] utils.logger_config: SeasonalSignal end time: 2025-07-05 20:45:00
+2024-06-03 15:41:26 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-06-03 15:41:26 [INFO] utils.logger_config: Will get rates from 2024-05-01 00:00:00 to 2024-06-03 15:41:26.236657
+2024-06-03 15:41:26 [DEBUG] utils.logger_config: Stoploss type selecet Percentages
+2024-06-03 15:41:26 [DEBUG] utils.logger_config: Direction trade long
+2024-06-03 15:41:26 [DEBUG] utils.logger_config: Stoploss 1.0297144999999999
+2024-06-03 15:41:28 [DEBUG] utils.logger_config: Call method ShortTermSignal - get_lot_size()
+2024-06-03 15:41:28 [DEBUG] utils.logger_config: risk amount for current signal is 498.26980000000003
+2024-06-03 15:41:28 [INFO] utils.logger_config: risk_amount=498.26980000000003 | distance=5420.000000000002 | point_value=1.0
+2024-06-03 15:41:28 [CRITICAL] utils.logger_config: REQUEST TO OPEN type='Short' symbol='EURUSD' volume=0.09 price=1.08391 sl=1.02971 tp=0 deviation=50 magic=110501 comment='test'
+2024-06-03 15:41:28 [CRITICAL] utils.logger_config: 1
+2024-06-03 15:41:28 [INFO] utils.logger_config: 1. order_send(): by EURUSD 0.09 lots at 1.08391 with deviation=50 points
+2024-06-03 15:41:28 [CRITICAL] utils.logger_config: 10016
+2024-06-03 15:41:28 [CRITICAL] utils.logger_config: RETCODE
+2024-06-03 15:41:28 [CRITICAL] utils.logger_config: (1, 'Success')
+2024-06-03 15:41:28 [CRITICAL] utils.logger_config: Order Send error
+2024-06-03 15:44:50 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-03 15:44:50 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-03 15:44:50 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-06-03 15:44:50 [INFO] utils.logger_config: SeasonalSignal time: 2025-05-05 08:30:00
+2024-06-03 15:44:50 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-23 20:45:00
+2024-06-03 15:44:50 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-03 15:44:50 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-06-03 15:44:50 [INFO] utils.logger_config: SeasonalSignal time: 2025-05-11 08:30:00
+2024-06-03 15:44:50 [INFO] utils.logger_config: SeasonalSignal end time: 2025-07-05 20:45:00
+2024-06-03 15:44:50 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-06-03 15:44:50 [INFO] utils.logger_config: Will get rates from 2024-05-01 00:00:00 to 2024-06-03 15:44:50.846491
+2024-06-03 15:44:50 [DEBUG] utils.logger_config: Stoploss type selecet Points
+2024-06-03 15:44:50 [DEBUG] utils.logger_config: Direction trade short
+2024-06-03 15:44:50 [DEBUG] utils.logger_config: Stoploss 1.0838400000000001
+2024-06-03 15:44:52 [DEBUG] utils.logger_config: Call method ShortTermSignal - get_lot_size()
+2024-06-03 15:44:52 [DEBUG] utils.logger_config: risk amount for current signal is 498.70485
+2024-06-03 15:44:52 [INFO] utils.logger_config: risk_amount=498.70485 | distance=4.999999999988347 | point_value=1.0
+2024-06-03 15:44:52 [CRITICAL] utils.logger_config: REQUEST TO OPEN type='Long' symbol='EURUSD' volume=99.74 price=1.08379 sl=1.08384 tp=0 deviation=50 magic=110501 comment='test'
+2024-06-03 15:44:52 [CRITICAL] utils.logger_config: 0
+2024-06-03 15:44:52 [INFO] utils.logger_config: 1. order_send(): by EURUSD 99.74 lots at 1.08379 with deviation=50 points
+2024-06-03 15:44:52 [CRITICAL] utils.logger_config: 10016
+2024-06-03 15:44:52 [CRITICAL] utils.logger_config: RETCODE
+2024-06-03 15:44:52 [CRITICAL] utils.logger_config: (1, 'Success')
+2024-06-03 15:44:52 [CRITICAL] utils.logger_config: Order Send error
+2024-06-03 15:46:07 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-03 15:46:07 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-03 15:46:07 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-06-03 15:46:07 [INFO] utils.logger_config: SeasonalSignal time: 2025-05-05 08:30:00
+2024-06-03 15:46:07 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-23 20:45:00
+2024-06-03 15:46:07 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-03 15:46:07 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-06-03 15:46:07 [INFO] utils.logger_config: SeasonalSignal time: 2025-05-11 08:30:00
+2024-06-03 15:46:07 [INFO] utils.logger_config: SeasonalSignal end time: 2025-07-05 20:45:00
+2024-06-03 15:46:07 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-06-03 15:46:07 [INFO] utils.logger_config: Will get rates from 2024-05-01 00:00:00 to 2024-06-03 15:46:07.196369
+2024-06-03 15:46:07 [DEBUG] utils.logger_config: Stoploss type selecet Percentages
+2024-06-03 15:46:07 [DEBUG] utils.logger_config: Direction trade long
+2024-06-03 15:46:07 [DEBUG] utils.logger_config: Stoploss 1.029496
+2024-06-03 15:46:09 [DEBUG] utils.logger_config: Call method ShortTermSignal - get_lot_size()
+2024-06-03 15:46:09 [DEBUG] utils.logger_config: risk amount for current signal is 498.79879999999997
+2024-06-03 15:46:09 [INFO] utils.logger_config: risk_amount=498.79879999999997 | distance=5417.999999999989 | point_value=1.0
+2024-06-03 15:46:09 [CRITICAL] utils.logger_config: REQUEST TO OPEN type='Short' symbol='EURUSD' volume=0.09 price=1.08368 sl=1.0295 tp=0 deviation=50 magic=110501 comment='test'
+2024-06-03 15:46:09 [CRITICAL] utils.logger_config: 1
+2024-06-03 15:46:09 [INFO] utils.logger_config: 1. order_send(): by EURUSD 0.09 lots at 1.08368 with deviation=50 points
+2024-06-03 15:46:09 [CRITICAL] utils.logger_config: 10016
+2024-06-03 15:46:09 [CRITICAL] utils.logger_config: RETCODE
+2024-06-03 15:46:09 [CRITICAL] utils.logger_config: (1, 'Success')
+2024-06-03 15:46:09 [CRITICAL] utils.logger_config: Order Send error
+2024-06-03 15:49:43 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-03 15:49:43 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-03 15:49:43 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-06-03 15:49:43 [INFO] utils.logger_config: SeasonalSignal time: 2025-05-05 08:30:00
+2024-06-03 15:49:43 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-23 20:45:00
+2024-06-03 15:49:43 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-03 15:49:43 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-06-03 15:49:43 [INFO] utils.logger_config: SeasonalSignal time: 2025-05-11 08:30:00
+2024-06-03 15:49:43 [INFO] utils.logger_config: SeasonalSignal end time: 2025-07-05 20:45:00
+2024-06-03 15:49:43 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-06-03 15:49:43 [INFO] utils.logger_config: Will get rates from 2024-05-01 00:00:00 to 2024-06-03 15:49:43.644884
+2024-06-03 15:49:43 [DEBUG] utils.logger_config: Stoploss type select Percentages
+2024-06-03 15:49:43 [DEBUG] utils.logger_config: Direction trade long
+2024-06-03 15:49:43 [DEBUG] utils.logger_config: Stoploss 1.0294675
+2024-06-03 15:49:45 [DEBUG] utils.logger_config: Call method ShortTermSignal - get_lot_size()
+2024-06-03 15:49:45 [DEBUG] utils.logger_config: risk amount for current signal is 498.84285000000006
+2024-06-03 15:49:45 [INFO] utils.logger_config: risk_amount=498.84285000000006 | distance=5417.999999999989 | point_value=1.0
+2024-06-03 15:49:45 [CRITICAL] utils.logger_config: REQUEST TO OPEN type='Short' symbol='EURUSD' volume=0.09 price=1.08365 sl=1.02947 tp=0 deviation=50 magic=110501 comment='test'
+2024-06-03 15:49:45 [CRITICAL] utils.logger_config: 1
+2024-06-03 15:49:45 [INFO] utils.logger_config: 1. order_send(): by EURUSD 0.09 lots at 1.08365 with deviation=50 points
+2024-06-03 15:49:45 [CRITICAL] utils.logger_config: 10016
+2024-06-03 15:49:45 [CRITICAL] utils.logger_config: RETCODE
+2024-06-03 15:49:45 [CRITICAL] utils.logger_config: (1, 'Success')
+2024-06-03 15:49:45 [CRITICAL] utils.logger_config: Order Send error
+2024-06-03 15:50:43 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-03 15:50:43 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-03 15:50:43 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-06-03 15:50:43 [INFO] utils.logger_config: SeasonalSignal time: 2025-05-05 08:30:00
+2024-06-03 15:50:43 [INFO] utils.logger_config: SeasonalSignal end time: 2025-05-23 20:45:00
+2024-06-03 15:50:43 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-03 15:50:43 [INFO] utils.logger_config: Signal SeasonalSignal was sucsessfuly created
+2024-06-03 15:50:43 [INFO] utils.logger_config: SeasonalSignal time: 2025-05-11 08:30:00
+2024-06-03 15:50:43 [INFO] utils.logger_config: SeasonalSignal end time: 2025-07-05 20:45:00
+2024-06-03 15:50:43 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-06-03 15:50:43 [INFO] utils.logger_config: Will get rates from 2024-05-01 00:00:00 to 2024-06-03 15:50:43.628941
+2024-06-03 15:50:43 [DEBUG] utils.logger_config: Stoploss type select Percentages
+2024-06-03 15:50:43 [DEBUG] utils.logger_config: Direction trade long
+2024-06-03 15:50:43 [DEBUG] utils.logger_config: Stoploss 1.029629
+2024-06-03 15:50:45 [DEBUG] utils.logger_config: Call method ShortTermSignal - get_lot_size()
+2024-06-03 15:50:45 [DEBUG] utils.logger_config: risk amount for current signal is 498.4768
+2024-06-03 15:50:45 [INFO] utils.logger_config: risk_amount=498.4768 | distance=5418.999999999995 | point_value=1.0
+2024-06-03 15:50:45 [CRITICAL] utils.logger_config: REQUEST TO OPEN type='Long' symbol='EURUSD' volume=0.09 price=1.08382 sl=1.02963 tp=0 deviation=50 magic=110501 comment='test'
+2024-06-03 15:50:45 [CRITICAL] utils.logger_config: 0
+2024-06-03 15:50:46 [INFO] utils.logger_config: 1. order_send(): by EURUSD 0.09 lots at 1.08382 with deviation=50 points

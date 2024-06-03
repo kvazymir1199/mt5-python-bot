@@ -94,10 +94,9 @@ class BaseSignal(BaseModel):
         ...
 
     def get_stoploss(self, price, points, direction, type):
-        print(f"{price=}")
-        print(f"{self.sl}")
+
         if type == StoplossType.percentage:
-            logger.debug("Stoploss type selecet Percentages")
+            logger.debug("Stoploss type select Percentages")
             if direction == OrderDirection.long:
                 logger.debug("Direction trade long")
                 sl = price - (price * 0.01 * self.sl)
@@ -141,12 +140,11 @@ class BaseSignal(BaseModel):
     def response_open(self, terminal):
         point: mt5.SymbolInfo = terminal.symbol_info(self.symbol).point
         digits: mt5.SymbolInfo = terminal.symbol_info(self.symbol).digits
-        print(f'{digits=}')
+
         price = (
             terminal.symbol_info(self.symbol).ask,
             terminal.symbol_info(self.symbol).bid
         )[self.direction == OrderDirection.long]
-
         sl = self.get_stoploss(
             price, point,
             self.direction,
@@ -161,7 +159,8 @@ class BaseSignal(BaseModel):
                                    terminal.symbol_info(self.symbol),
                                    distance=distance)
 
-        order_type = ("Long", "Short")[self.direction == OrderDirection.long]
+
+        order_type = "Long" if self.direction == OrderDirection.long else "Short"
         return ResponseOpen(
             type=order_type,
             symbol=self.symbol,
