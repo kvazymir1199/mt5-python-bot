@@ -32,7 +32,6 @@ def on_timer(timer_seconds: int):
             func(*args, **kwargs)
             while True:
                 current_time = time.time()
-
                 if current_time - last_check_time > timer_seconds:
                     print("".join(["==_==" for _ in range(10)]))
                     logger.info("Вызов функции on_timer")
@@ -44,24 +43,10 @@ def on_timer(timer_seconds: int):
 
     return function
 
-def repeat_every(interval):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            def repeated_function():
-                while True:
-                    func(*args, **kwargs)
-                    time.sleep(interval)
-
-            # Запуск отдельного потока для выполнения функции с заданным интервалом
-            thread = threading.Thread(target=repeated_function)
-            thread.daemon = True  # Позволяет завершить поток, когда основной поток завершится
-            thread.start()
-        return wrapper
-    return decorator
 
 def connection(func):
     def wrapper(self, *args, **kwargs):
+
         if self.terminal.initialize(path=self.path):
             result = func(self,*args, **kwargs)
             self.terminal.shutdown()
@@ -91,40 +76,61 @@ class Expert:
         self.signals: list[SeasonalSignal, ShortTermSignal, BreakoutSignal] = []
 
         self.csv_file: Path = Path(__file__).parent.parent / "files" / f"{os.getenv("FILE_NAME")}.csv"
-        self.parse_signal_data()
+        self.refresh_signals()
 
 
 
     def connect(self):
         return self.terminal.initialize(path=self.path)
 
-    @connection
-    def parse_signal_data(self):
-        """
-        Parse data from csv file and convert to Signal
-        :return:
-        """
-        header = ['Magic Number;Month;Symbol;Entry;TP;SL;SL Type;Risk;Direction;Type;Open Time;Close Time']
+    # @connection
+    # def parse_signal_data(self):
+    #     """
+    #     Parse data from csv file and convert to Signal
+    #     :return:
+    #     """
+    #     header = ['Magic Number;Month;Symbol;Entry;TP;SL;SL Type;Risk;Direction;Type;Open Time;Close Time']
+    #
+    #     logger.info(f"CSV file path: {self.csv_file}")
+    #     try:
+    #         with self.csv_file.open("r", newline="") as file:
+    #             reader = csv.DictReader(file, delimiter=";")
+    #             for row in reader:
+    #                 try:
+    #                     signal = self.create_signal(row)
+    #                     self.signals.append(signal)
+    #                 except ValidationError as e:
+    #                     logger.critical(f"Validation error for row {row}: {e}")
+    #
+    #     except FileNotFoundError:
+    #         logger.critical(f"File {self.csv_file} not found.")
+    #     except Exception as e:
+    #         logger.critical(f"An error occurred: {e}")
 
-        print(f"CSV file path: {self.csv_file}")
+    @connection
+    def refresh_signals(self):
         try:
             with self.csv_file.open("r", newline="") as file:
                 reader = csv.DictReader(file, delimiter=";")
-                for row in reader:
+                for data in reader:
                     try:
-                        signal = self.create_signal(row)
-                        self.signals.append(signal)
+                        magic = int(data["Magic Number"])
+                        for signal in self.signals:
+                            if signal.magic == magic:
+                                self.update(signal, data)
+                                break
+                        else:
+                            signal = self.create(data)
+                            self.signals.append(signal)
+
                     except ValidationError as e:
-                        print(f"Validation error for row {row}: {e}")
-                timestamp = Path(self.path).stat().st_mtime
-                self.last_timestamp = datetime.datetime.fromtimestamp(timestamp)
-
+                        logger.critical(f"Validation error for row {data}: {e}")
         except FileNotFoundError:
-            print(f"File {self.csv_file} not found.")
+            logger.critical(f"File {self.csv_file} not found.")
         except Exception as e:
-            print(f"An error occurred: {e}")
+            logger.critical(f"An error occurred: {e}")
 
-    def create_signal(self, data: dict):
+    def create(self, data: dict):
         signal = self.parse_signal_type(
             data.get("Type")
         )
@@ -146,8 +152,21 @@ class Expert:
             direction=(OrderDirection.long, OrderDirection.short)[data['Direction'] == "Short"],
             open_time=data['Open Time'] if data['Open Time'] else None,
             close_time=data['Close Time'] if data['Close Time'] else None,
-            allowed_symbols=self.terminal.symbol_info(data.get("Symbol"))
         )
+
+    def update(self,signal, data:dict):
+        signal.magic = int(data['Magic Number'])
+        signal.month = int(data['Month'])
+        signal.symbol = data['Symbol']
+        signal.entry = data['Entry']
+        signal.tp = data["TP"]
+        signal.sl = float(data['SL'])
+        signal.sl_type = (StoplossType.percentage, StoplossType.points)[data['SL Type'] == "Points"]
+        signal.risk = float(data['Risk'])
+        signal.direction = (OrderDirection.long, OrderDirection.short)[data['Direction'] == "Short"]
+        signal.open_time = data['Open Time'] if data['Open Time'] else None
+        signal.close_time = data['Close Time'] if data['Close Time'] else None
+        signal.update()
 
     @staticmethod
     def parse_signal_type(signal_type: str):
@@ -158,7 +177,7 @@ class Expert:
         else:
             return BreakoutSignal
 
-    def find_filling_mode(self, symbol):
+    def get_filling_mode(self, symbol):
         """
         The MetaTrader5 library doesn't find the filling mode correctly for a lot of brokers
         """
@@ -179,33 +198,52 @@ class Expert:
 
         return i
 
-    @on_timer(5)
+    @on_timer(30)
     def main(self):
+        """
+        Calls two function
+        1 - create or update information about signals
+        2 - manage signal behaviour
+        :return: None
+        """
         self.refresh_signals()
-        logger.info(f"Count seasonal strategy {len(self.signals)}")
+        self.check_signals()
+
+    def check_signals(self):
+        """
+        Check signals and calls manage function depends on class type
+        :return: None
+        """
         for signal in self.signals:
-            if isinstance(signal, SeasonalSignal):
-                self.manage_seasonal_request(signal)
+            self.manage_signal(signal)
+
+
 
     @connection
-    def manage_seasonal_request(self, signal):
-        """Написать декоратор для установки соединения и разрыва с терминалом"""
+    def manage_signal(self, signal):
+        """
+        Handle signal data and send request depends on getted signal data
+        :param signal:
+        :return:
+        """
+        request: ResponseOpen | ResponseClose | None = signal.check(
+            terminal=self.terminal
+        )
 
-        request: ResponseClose = signal.get_request(self.terminal)
-        print(f"{request= }")
         if request is None:
             return
+
         if isinstance(request, ResponseOpen):
             signal.ticket = self.send_request(request)
             if signal.ticket is not None:
                 signal.status = Status.open
         elif isinstance(request, ResponseClose):
-            if mt5.Close(symbol=request.symbol, ticket=request.ticket):
+            if self.terminal.Close(symbol=request.symbol, ticket=request.ticket):
                 signal.status = Status.close
 
     def send_request(self, request: ResponseOpen) -> int | None:
         logger.critical(f"REQUEST TO OPEN {request}")
-        filling_type = self.find_filling_mode(request.symbol)
+        filling_type = self.get_filling_mode(request.symbol)
         logger.critical(f"{(mt5.ORDER_TYPE_BUY,mt5.ORDER_TYPE_SELL)[request.type == "Long"]}")
         r = {
             "action": mt5.TRADE_ACTION_DEAL,
@@ -221,7 +259,7 @@ class Expert:
             "type_filling": filling_type,
         }
         result: OrderSendResult = self.terminal.order_send(r)
-        print("1. order_send(): by {} {} lots at {} with deviation={} points".format(
+        logger.info("1. order_send(): by {} {} lots at {} with deviation={} points".format(
             request.symbol, request.volume, request.price, request.deviation))
         if result is None:
             logger.critical("NONE")
@@ -233,45 +271,9 @@ class Expert:
             logger.critical(f"{self.terminal.last_error()}")
             logger.critical("Order Send error")
             return None
-        print(request)
+
         ticket = result.order
         return ticket
 
 
-    @connection
-    def refresh_signals(self):
-        try:
-            with self.csv_file.open("r", newline="") as file:
-                reader = csv.DictReader(file, delimiter=";")
-                for data in reader:
-                    try:
-                        magic = int(data["Magic Number"])
-                        print(magic)
-                        for signal in self.signals:
-                            if signal.magic == magic:
-                                print(f"Нашел старый сигнал с {magic}")
-                                signal.magic=int(data['Magic Number'])
-                                signal.month=int(data['Month'])
-                                signal.symbol=data['Symbol']
-                                signal.entry=data['Entry']
-                                signal.tp=data["TP"]
-                                signal.sl=float(data['SL'])
-                                signal.sl_type=(StoplossType.percentage, StoplossType.points)[data['SL Type'] == "Points"]
-                                signal.risk=float(data['Risk'])
-                                signal.direction = (OrderDirection.long, OrderDirection.short)[data['Direction'] == "Short"]
-                                signal.open_time=data['Open Time'] if data['Open Time'] else None
-                                signal.close_time=data['Close Time'] if data['Close Time'] else None
-                                signal.info()
-                                break
 
-                        else:
-                            print(f"Создаю новый сигнал с {magic}")
-                            signal = self.create_signal(data)
-                            self.signals.append(signal)
-
-                    except ValidationError as e:
-                        print(f"Validation error for row {data}: {e}")
-        except FileNotFoundError:
-            print(f"File {self.csv_file} not found.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
