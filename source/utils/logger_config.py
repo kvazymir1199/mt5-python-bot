@@ -19,10 +19,13 @@ LOGGING_CONFIG = {
     },
     "handlers": {
         "file_handler": {
-            "class": "logging.FileHandler",
+            "class": "logging.handlers.TimedRotatingFileHandler",
             "filename": os.path.join(LOG_DIR, LOG_FILE),
-            "mode": "a",
+            "when": "midnight",
+            "interval": 1,
+            "backupCount": 7,
             "formatter": "standard",
+            "encoding": "utf-8"
         },
         "console_handler": {
             "class": "logging.StreamHandler",

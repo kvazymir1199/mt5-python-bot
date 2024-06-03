@@ -2,6 +2,8 @@ import time
 
 import MetaTrader5 as mt5
 from datetime import datetime, timedelta
+
+from MetaTrader5 import Tick
 from pydantic import BaseModel, field_validator
 from enum import Enum
 from utils import exceptions
@@ -92,6 +94,8 @@ class BaseSignal(BaseModel):
         ...
 
     def get_stoploss(self, price, points, direction, type):
+        print(f"{price=}")
+        print(f"{self.sl}")
         if type == StoplossType.percentage:
             logger.debug("Stoploss type selecet Percentages")
             if direction == OrderDirection.long:
@@ -136,7 +140,8 @@ class BaseSignal(BaseModel):
 
     def response_open(self, terminal):
         point: mt5.SymbolInfo = terminal.symbol_info(self.symbol).point
-
+        digits: mt5.SymbolInfo = terminal.symbol_info(self.symbol).digits
+        print(f'{digits=}')
         price = (
             terminal.symbol_info(self.symbol).ask,
             terminal.symbol_info(self.symbol).bid
@@ -147,11 +152,14 @@ class BaseSignal(BaseModel):
             self.direction,
             self.sl_type
         )
+        sl = round(sl, digits)
         distance = abs(price - sl) / point
         account_info: mt5.AccountInfo = terminal.account_info()
         if terminal.symbol_select(self.symbol, True):
             time.sleep(2)
-        volume = self.get_lot_size(account_info, terminal.symbol_info(self.symbol), distance=distance)
+        volume = self.get_lot_size(account_info,
+                                   terminal.symbol_info(self.symbol),
+                                   distance=distance)
 
         order_type = ("Long", "Short")[self.direction == OrderDirection.long]
         return ResponseOpen(
@@ -194,7 +202,8 @@ class SeasonalSignal(BaseSignal):
 
     def info(self):
         self.set_time()
-        logger.info(f"Signal {self.__class__.__name__} was sucsessfuly created")
+        logger.info(
+            f"Signal {self.__class__.__name__} was sucsessfuly created")
         logger.info(f"{self.__class__.__name__} time: {self.open_time_d}")
         logger.info(f"{self.__class__.__name__} end time: {self.close_time_d}")
         return self
@@ -278,16 +287,15 @@ class ShortTermSignal(BaseSignal):
             _time,
             datetime.now()
 
-
         )
         return len(rates)
 
     def info(self):
         ...
 
-    def check_signal_time(self,_time):
+    def check_signal_time(self, _time):
         signal_time = parse_datetime(
-            (datetime.now().month,datetime.now().day),
+            (datetime.now().month, datetime.now().day),
             _time
         )
         if datetime.now() < signal_time:
@@ -314,6 +322,85 @@ class ShortTermSignal(BaseSignal):
 
 
 class BreakoutSignal(BaseSignal):
+    start_day: datetime = None
+    end_day: int = None
+    prev_high: float = None
+    prev_low: float = None
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.end_day = int(self.tp.split(" ")[0])
+        self.start_day = datetime(
+            year=datetime.now().year,
+            month=self.month,
+            day=1
+        )
 
     def info(self):
         ...
+
+    def check(self, terminal: mt5) -> ResponseOpen | ResponseClose | None:
+        if self.prev_high is None or self.prev_low is None:
+            prev_bar = terminal.copy_rates_from_pos(self.symbol,
+                                                    terminal.TIMEFRAME_MN1,
+                                                    1, 1)[0]
+            self.prev_high = prev_bar[2]
+            self.prev_low = prev_bar[3]
+        if self.status is Status.init:
+            if datetime.now() > self.start_day:
+                tick: Tick = terminal.symbol_info_tick(self.symbol)
+                condition = (tick.bid > self.prev_high
+                             if self.entry == "PMH"
+                             else tick.ask < self.prev_low)
+                if condition:
+                    message = (
+                        f"{self} send request bid price: {tick.bid} > {self.prev_high}"
+                        if self.entry == "PMH"
+                        else f"send request ask price{tick.ask} < {self.prev_low}"
+                    )
+                    logger.info(message)
+                    return self.response_open(terminal)
+
+        if self.status is Status.open:
+            signal_time = datetime(
+                year=datetime.now().year,
+                month=self.month,
+                day=1
+            )
+            work_day_in_month = self.get_signal_trading_days(
+                terminal,
+                signal_time
+            )
+            if work_day_in_month > self.end_day:
+                return self.response_close()
+
+    def get_signal_trading_days(
+            self,
+            terminal: mt5,
+            _time: datetime
+    ):
+        """
+        Return trading days from selected date
+
+        :param terminal: Terminal for interaction with MT5 API and getting rates
+        :param _time: datetime variable from what date start gathering
+        :return: Count of working days (bars that have minimum 1 tick volume)
+        """
+        logger.info(f"Will get rates from {_time} to {datetime.now()}")
+        rates = terminal.copy_rates_range(
+            self.symbol,
+            terminal.TIMEFRAME_D1,
+            _time,
+            datetime.now()
+
+        )
+        return len(rates)
+
+    def check_signal_time(self, _time):
+        signal_time = parse_datetime(
+            (datetime.now().month, datetime.now().day),
+            _time
+        )
+        if datetime.now() < signal_time:
+            return
+        return signal_time

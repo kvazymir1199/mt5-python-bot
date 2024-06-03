@@ -1,10 +1,8 @@
-import threading
-import datetime
 from typing import Callable, Type
 from functools import wraps
 import MetaTrader5 as mt5
 from MetaTrader5 import AccountInfo, SymbolInfo, OrderSendResult
-from pydantic import ValidationError
+
 from utils.logger_config import logger
 from pathlib import Path
 import csv
@@ -198,7 +196,7 @@ class Expert:
 
         return i
 
-    @on_timer(30)
+    @on_timer(5)
     def main(self):
         """
         Calls two function
@@ -249,7 +247,7 @@ class Expert:
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": request.symbol,
             "volume": request.volume,
-            "type": (mt5.ORDER_TYPE_BUY,mt5.ORDER_TYPE_SELL)[request.type == "Long"],
+            "type":  mt5.ORDER_TYPE_BUY if request.type == "Long" else mt5.ORDER_TYPE_SELL,
             "price": request.price,
             "deviation": request.deviation,
             "sl": request.sl,
@@ -258,6 +256,7 @@ class Expert:
             "type_time": mt5.ORDER_TIME_GTC,
             "type_filling": filling_type,
         }
+        print(r)
         result: OrderSendResult = self.terminal.order_send(r)
         logger.info("1. order_send(): by {} {} lots at {} with deviation={} points".format(
             request.symbol, request.volume, request.price, request.deviation))
