@@ -277,6 +277,8 @@ class ShortTermSignal(BaseSignal):
             terminal.TIMEFRAME_D1,
             _time,
             datetime.now()
+
+
         )
         return len(rates)
 
