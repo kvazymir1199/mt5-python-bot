@@ -159,6 +159,7 @@ class BaseSignal(BaseModel):
                                    terminal.symbol_info(self.symbol),
                                    distance=distance)
 
+
         order_type = "Long" if self.direction == OrderDirection.long else "Short"
         return ResponseOpen(
             type=order_type,
