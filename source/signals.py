@@ -44,23 +44,13 @@ class ResponseClose(BaseModel):
 
 
 def parse_datetime(month_day: str | tuple, hour_min) -> datetime:
-    if isinstance(month_day, str):
-        return datetime(
-            year=datetime.now().year,
-            month=int(month_day.split(".")[1]),
-            day=int(month_day.split(".")[0]),
-            hour=int(hour_min.split(":")[0]),
-            minute=int(hour_min.split(":")[1])
-        )
-    else:
-        logger.critical(f"{month_day[0]} | {month_day[1]}")
-        return datetime(
-            year=datetime.now().year,
-            month=month_day[0],
-            day=month_day[1],
-            hour=int(hour_min.split(":")[0]),
-            minute=int(hour_min.split(":")[1])
-        )
+    return datetime(
+        year=datetime.now().year,
+        month=int(month_day.split(".")[1]) if isinstance(month_day, str) else month_day[0],
+        day=int(month_day.split(".")[0]) if isinstance(month_day, str) else month_day[1],
+        hour=int(hour_min.split(":")[0]),
+        minute=int(hour_min.split(":")[1])
+    )
 
 
 class BaseSignal(BaseModel):
@@ -78,57 +68,43 @@ class BaseSignal(BaseModel):
     status: Status = Status.init
     ticket: int = None
 
-    # allowed_symbols: tuple = ()
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.info()
 
-    # @field_validator("symbol")
-    # def validate_symbol(cls,v):
-    #     if v not in cls.allowed_symbols:
-    #         logger.critical(f"{v} not in {cls.allowed_symbols}")
-    #         raise exceptions.SignalSymbolNotFoundError(v)
-    #     return v
-    #
+    def info(self):
+        self.update()
+        logger.info(
+            f"Signal {self.__class__.__name__} was succsessfuly created")
+        logger.info(f"{self.__class__.__name__} time: {self.open_time_d}")
+        logger.info(f"{self.__class__.__name__} end time: {self.close_time_d}")
+
     def update(self):
         ...
 
     def check(self, terminal) -> ResponseOpen | ResponseClose | None:
         ...
 
-    def get_stoploss(self, price, points, direction, type):
-
-        if type == StoplossType.percentage:
-            logger.debug("Stoploss type select Percentages")
-            if direction == OrderDirection.long:
-                logger.debug("Direction trade long")
-                sl = price - (price * 0.01 * self.sl)
-                logger.debug(f"Stoploss {sl}")
-                return sl
+    def get_stoploss(self, price, points):
+        logger.info("Get Stoploss function")
+        if self.direction == OrderDirection.long:
+            if self.sl_type == StoplossType.percentage:
+                return price - (price * 0.01 * self.sl)
             else:
-                logger.debug("Direction trade short")
-                sl = price + (price * 0.01 * self.sl)
-                logger.debug(f"Stoploss {sl}")
-                return sl
+                return price - self.sl * points
         else:
-            logger.debug("Stoploss type selecet Points")
-            if type == OrderDirection.long:
-                logger.debug("Direction trade long")
-                sl = price - self.sl * points
-                logger.debug(f"Stoploss {sl}")
-                return sl
+            if self.sl_type == StoplossType.percentage:
+                return price + (price * 0.01 * self.sl)
             else:
-                logger.debug("Direction trade short")
-                sl = price + self.sl * points
-                logger.debug(f"Stoploss {sl}")
-                return sl
+                return price + self.sl * points
 
     def get_lot_size(self, account_info, symbol_info, distance):
-        logger.debug(f"Call method {self.__class__.__name__} - get_lot_size()")
+
         account_equity = account_info.equity
         risk_amount = account_equity * self.risk / 100
-        logger.debug(f"risk amount for current signal is {risk_amount}")
         tick_value = symbol_info.trade_tick_value
         tick_size = symbol_info.trade_tick_size
         point_value = tick_value / (tick_size / symbol_info.point)
-        logger.info(f"{risk_amount=} | {distance=} | {point_value=}")
         try:
             lot_size = risk_amount / distance / point_value
         except ZeroDivisionError:
@@ -142,13 +118,13 @@ class BaseSignal(BaseModel):
         digits: mt5.SymbolInfo = terminal.symbol_info(self.symbol).digits
 
         price = (
-            terminal.symbol_info(self.symbol).ask,
-            terminal.symbol_info(self.symbol).bid
-        )[self.direction == OrderDirection.long]
+            terminal.symbol_info(self.symbol).ask
+            if self.direction == OrderDirection.long
+            else terminal.symbol_info(self.symbol).bid
+        )
         sl = self.get_stoploss(
             price, point,
-            self.direction,
-            self.sl_type
+
         )
         sl = round(sl, digits)
         distance = abs(price - sl) / point
@@ -158,7 +134,6 @@ class BaseSignal(BaseModel):
         volume = self.get_lot_size(account_info,
                                    terminal.symbol_info(self.symbol),
                                    distance=distance)
-
 
         order_type = "Long" if self.direction == OrderDirection.long else "Short"
         return ResponseOpen(
@@ -182,30 +157,9 @@ class SeasonalSignal(BaseSignal):
     open_time_d: datetime | None = None
     close_time_d: datetime | None = None
 
-    # @field_validator("open_time")
-    # def validate_entry(cls, v: str):
-    #     result = v.split(":")
-    #
-    #     if len(result) != 2:
-    #         raise exceptions.SignalTimeStartFormatError(v)
-    def __init__(self, **data):
-        super().__init__(**data)
-        self.info()
-
     def update(self):
-        self.set_time()
-
-    def set_time(self):
         self.open_time_d = self.get_start_time()
         self.close_time_d = self.get_close_time()
-
-    def info(self):
-        self.set_time()
-        logger.info(
-            f"Signal {self.__class__.__name__} was sucsessfuly created")
-        logger.info(f"{self.__class__.__name__} time: {self.open_time_d}")
-        logger.info(f"{self.__class__.__name__} end time: {self.close_time_d}")
-        return self
 
     def get_start_time(self) -> datetime:
         """
@@ -264,6 +218,9 @@ class ShortTermSignal(BaseSignal):
 
     def __init__(self, **data):
         super().__init__(**data)
+        self.update()
+
+    def update(self):
         self.start_day = int(self.entry.split(" ")[0])
         self.end_day = int(self.tp.split(" ")[0])
 
@@ -301,20 +258,37 @@ class ShortTermSignal(BaseSignal):
             return
         return signal_time
 
+    def get_parse_time(self, hour_min: str):
+        _time = datetime.now()
+        hour, minute = map(int, hour_min.split(":"))
+        _time = _time.replace(hour=hour, minute=minute, second=0)
+        return _time
+
     def check(self, terminal: mt5):
-        signal_time = datetime(
+        signal_date = datetime(
             year=datetime.now().year,
             month=self.month,
             day=1
         )
         work_day_in_month = self.get_signal_trading_days(
             terminal,
-            signal_time
+            signal_date
         )
         condition = (work_day_in_month > self.start_day
                      if self.status == Status.init
                      else work_day_in_month > self.end_day)
-        if condition:
+        if not condition: return None
+
+        signal_time = self.get_parse_time(
+            self.open_time if self.status == Status.init else self.close_time)
+
+        if datetime.now() > signal_time:
+            if self.status == Status.init:
+                logger.info(f"Return responce open")
+                return self.response_open(terminal)
+            elif self.status == Status.open:
+                logger.info(f"Return responce close")
+                return self.response_close()
             return (self.response_open(terminal)
                     if self.status == Status.init
                     else self.response_close())
@@ -328,6 +302,9 @@ class BreakoutSignal(BaseSignal):
 
     def __init__(self, **data):
         super().__init__(**data)
+        self.update()
+
+    def update(self):
         self.end_day = int(self.tp.split(" ")[0])
         self.start_day = datetime(
             year=datetime.now().year,
@@ -385,7 +362,6 @@ class BreakoutSignal(BaseSignal):
         :param _time: datetime variable from what date start gathering
         :return: Count of working days (bars that have minimum 1 tick volume)
         """
-        logger.info(f"Will get rates from {_time} to {datetime.now()}")
         rates = terminal.copy_rates_range(
             self.symbol,
             terminal.TIMEFRAME_D1,
