@@ -79,33 +79,6 @@ class Expert:
 
 
 
-    def connect(self):
-        return self.terminal.initialize(path=self.path)
-
-    # @connection
-    # def parse_signal_data(self):
-    #     """
-    #     Parse data from csv file and convert to Signal
-    #     :return:
-    #     """
-    #     header = ['Magic Number;Month;Symbol;Entry;TP;SL;SL Type;Risk;Direction;Type;Open Time;Close Time']
-    #
-    #     logger.info(f"CSV file path: {self.csv_file}")
-    #     try:
-    #         with self.csv_file.open("r", newline="") as file:
-    #             reader = csv.DictReader(file, delimiter=";")
-    #             for row in reader:
-    #                 try:
-    #                     signal = self.create_signal(row)
-    #                     self.signals.append(signal)
-    #                 except ValidationError as e:
-    #                     logger.critical(f"Validation error for row {row}: {e}")
-    #
-    #     except FileNotFoundError:
-    #         logger.critical(f"File {self.csv_file} not found.")
-    #     except Exception as e:
-    #         logger.critical(f"An error occurred: {e}")
-
     @connection
     def refresh_signals(self):
         try:
@@ -197,7 +170,7 @@ class Expert:
 
         return i
 
-    @on_timer(5)
+    @on_timer(10)
     def main(self):
         """
         Calls two function
@@ -225,6 +198,7 @@ class Expert:
         :param signal:
         :return:
         """
+
         request: ResponseOpen | ResponseClose | None = signal.check(
             terminal=self.terminal
         )
@@ -241,9 +215,9 @@ class Expert:
                 signal.status = Status.close
 
     def send_request(self, request: ResponseOpen) -> int | None:
-        logger.critical(f"REQUEST TO OPEN {request}")
+
         filling_type = self.get_filling_mode(request.symbol)
-        logger.critical(f"{mt5.ORDER_TYPE_BUY if request.type == "Long" else mt5.ORDER_TYPE_SELL}")
+
         r = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": request.symbol,
@@ -257,7 +231,6 @@ class Expert:
             "type_time": mt5.ORDER_TIME_GTC,
             "type_filling": filling_type,
         }
-        print(r)
         result: OrderSendResult = self.terminal.order_send(r)
         logger.info("1. order_send(): by {} {} lots at {} with deviation={} points".format(
             request.symbol, request.volume, request.price, request.deviation))
@@ -266,8 +239,9 @@ class Expert:
             logger.critical(f"{self.terminal.last_error()}")
             logger.critical("Order Send error")
         if result.retcode != mt5.TRADE_RETCODE_DONE:
-            logger.critical(result.retcode)
-            logger.critical("RETCODE")
+
+            logger.critical(f"RETCODE: {result.retcode}")
+            logger.critical(f"Request: {r}")
             logger.critical(f"{self.terminal.last_error()}")
             logger.critical("Order Send error")
             return None
