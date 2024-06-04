@@ -42,7 +42,6 @@ def on_timer(timer_seconds: int):
 
 def connection(func):
     def wrapper(self, *args, **kwargs):
-
         if self.terminal.initialize(path=self.path):
             result = func(self,*args, **kwargs)
             self.terminal.shutdown()
