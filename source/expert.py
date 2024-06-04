@@ -32,10 +32,7 @@ def on_timer(timer_seconds: int):
             while True:
                 current_time = time.time()
                 if current_time - last_check_time > timer_seconds:
-                    print("".join(["==_==" for _ in range(10)]))
-                    logger.info("Вызов функции on_timer")
                     func(*args, **kwargs)
-                    print("".join(["==_==" for _ in range(10)]))
                     last_check_time = time.time()
 
         return wrapper
@@ -86,6 +83,7 @@ class Expert:
                 reader = csv.DictReader(file, delimiter=";")
                 for data in reader:
                     try:
+                        # Уведомлять об обновлении
                         magic = int(data["Magic Number"])
                         for signal in self.signals:
                             if signal.magic == magic:
