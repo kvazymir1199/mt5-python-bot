@@ -1543,3 +1543,80 @@
 2024-06-04 13:25:06 [INFO] utils.logger_config: Вызов функции on_timer
 2024-06-04 13:25:06 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 13:25:06.940202
 2024-06-04 13:25:06 [INFO] utils.logger_config: Return responce close
+2024-06-04 19:36:37 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-04 19:36:37 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:36:37.636103
+2024-06-04 19:36:47 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:36:47 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:36:47.644554
+2024-06-04 19:36:57 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:37:01 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:37:01.621255
+2024-06-04 19:37:11 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:37:11 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:37:11.650439
+2024-06-04 19:37:21 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:37:21 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:37:21.680554
+2024-06-04 19:37:31 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:37:31 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:37:31.689193
+2024-06-04 19:37:41 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:37:41 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:37:41.701214
+2024-06-04 19:37:51 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:37:51 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:37:51.706522
+2024-06-04 19:38:01 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:38:01 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:38:01.714608
+2024-06-04 19:38:11 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:38:11 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:38:11.729485
+2024-06-04 19:40:20 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-04 19:40:20 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:40:20.811514
+2024-06-04 19:40:20 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:40:30 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:40:30 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:40:30.817719
+2024-06-04 19:40:30 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:40:40 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:40:40 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:40:40.828312
+2024-06-04 19:40:40 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:40:50 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:40:50 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:40:50.835043
+2024-06-04 19:40:50 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:41:00 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:41:00 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:41:00.849437
+2024-06-04 19:41:00 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:41:10 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:41:10 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:41:10.861526
+2024-06-04 19:41:10 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:41:10 [INFO] utils.logger_config: Return responce open
+2024-06-04 19:41:10 [INFO] utils.logger_config: Get Stoploss function
+2024-06-04 19:41:13 [INFO] utils.logger_config: 1. order_send(): by EURUSD 0.09 lots at 1.08663 with deviation=50 points
+2024-06-04 19:41:23 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:41:23 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:41:23.366142
+2024-06-04 19:41:23 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:41:33 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:41:33 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:41:33.368413
+2024-06-04 19:41:33 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:41:43 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:41:43 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:41:43.373021
+2024-06-04 19:41:43 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:41:53 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:41:53 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:41:53.385599
+2024-06-04 19:41:53 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:42:03 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:42:03 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:42:03.385806
+2024-06-04 19:42:03 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:42:13 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:42:13 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:42:13.386965
+2024-06-04 19:42:13 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:42:23 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:42:23 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:42:23.392191
+2024-06-04 19:42:23 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:42:33 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:42:33 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:42:33.407460
+2024-06-04 19:42:33 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:42:43 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:42:43 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:42:43.410693
+2024-06-04 19:42:43 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:42:53 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:42:53 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:42:53.416863
+2024-06-04 19:42:53 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:43:03 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:43:03 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:43:03.429481
+2024-06-04 19:43:03 [INFO] utils.logger_config: Trading days in month 2
+2024-06-04 19:43:13 [INFO] utils.logger_config: Вызов функции on_timer
+2024-06-04 19:43:13 [INFO] utils.logger_config: Will get rates from 2024-06-01 00:00:00 to 2024-06-04 19:43:13.440679
+2024-06-04 19:43:13 [INFO] utils.logger_config: Trading days in month 2
