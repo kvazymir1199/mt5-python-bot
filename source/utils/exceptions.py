@@ -1,3 +1,5 @@
+from . import server_status_code
+
 class SignalSymbolNotFoundError(Exception):
     def __init__(self, symbol):
         self.symbol = symbol
@@ -17,3 +19,8 @@ class SignalTimeEndFormatError(Exception):
 
 
 
+class ServerStatusError(Exception):
+    def __init__(self,status_code):
+        super().__init__(f"An error has occurred when expert was trying open a position: \n"
+                         f"Error number: {status_code}\n"
+                         f"Error description: {server_status_code.SERVER_STATUS_CODE.get(status_code)}\n")

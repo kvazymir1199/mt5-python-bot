@@ -32,16 +32,22 @@ def on_timer(timer_seconds: int):
             while True:
                 current_time = time.time()
                 if current_time - last_check_time > timer_seconds:
+                    # print("".join(["==_==" for _ in range(10)]))
+                    # logger.info("Вызов функции on_timer")
                     func(*args, **kwargs)
+                    # print("".join(["==_==" for _ in range(10)]))
                     last_check_time = time.time()
 
         return wrapper
 
     return function
 
+def f(dig:str):
+    return float(dig.replace(',', '.'))
 
 def connection(func):
     def wrapper(self, *args, **kwargs):
+
         if self.terminal.initialize(path=self.path):
             result = func(self,*args, **kwargs)
             self.terminal.shutdown()
@@ -115,9 +121,9 @@ class Expert:
             symbol=data['Symbol'],
             entry=data['Entry'],
             tp=data["TP"],
-            sl=float(data['SL']),
+            sl=f(data['SL']),
             sl_type=StoplossType.percentage if data['SL Type'] == "Percentage" else  StoplossType.points,
-            risk=float(data['Risk']),
+            risk=f(data['Risk']),
             direction= OrderDirection.long if data['Direction'] == "Long" else OrderDirection.short,
             open_time=data['Open Time'] if data['Open Time'] else None,
             close_time=data['Close Time'] if data['Close Time'] else None,
@@ -129,9 +135,9 @@ class Expert:
         signal.symbol = data['Symbol']
         signal.entry = data['Entry']
         signal.tp = data["TP"]
-        signal.sl = float(data['SL'])
+        signal.sl = f(data['SL'])
         signal.sl_type = StoplossType.percentage if data['SL Type'] == "Percentage" else  StoplossType.points
-        signal.risk = float(data['Risk'])
+        signal.risk = f(data['Risk'])
         signal.direction = OrderDirection.long if data['Direction'] == "Long" else OrderDirection.short
         signal.open_time = data['Open Time'] if data['Open Time'] else None
         signal.close_time = data['Close Time'] if data['Close Time'] else None
@@ -167,7 +173,7 @@ class Expert:
 
         return i
 
-    @on_timer(10)
+    @on_timer(1)
     def main(self):
         """
         Calls two function
@@ -199,22 +205,21 @@ class Expert:
         request: ResponseOpen | ResponseClose | None = signal.check(
             terminal=self.terminal
         )
-
-        if request is None:
-            return
-
-        if isinstance(request, ResponseOpen):
-            signal.ticket = self.send_request(request)
-            if signal.ticket is not None:
-                signal.status = Status.open
-        elif isinstance(request, ResponseClose):
-            if self.terminal.Close(symbol=request.symbol, ticket=request.ticket):
-                signal.status = Status.close
+        if request is None: return
+        try:
+            if isinstance(request, ResponseOpen):
+                signal.ticket = self.send_request(request)
+                if signal.ticket is not None:
+                    signal.status = Status.open
+            elif isinstance(request, ResponseClose):
+                if self.terminal.Close(symbol=request.symbol, ticket=request.ticket):
+                    logger.info(f"Order with ticket: {request.ticket} was successfully closed")
+                    signal.status = Status.close
+        except Exception as e:
+            logger.error(e)
 
     def send_request(self, request: ResponseOpen) -> int | None:
-
         filling_type = self.get_filling_mode(request.symbol)
-
         r = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": request.symbol,
@@ -229,21 +234,12 @@ class Expert:
             "type_filling": filling_type,
         }
         result: OrderSendResult = self.terminal.order_send(r)
-        logger.info("1. order_send(): by {} {} lots at {} with deviation={} points".format(
-            request.symbol, request.volume, request.price, request.deviation))
         if result is None:
-            logger.critical("NONE")
-            logger.critical(f"{self.terminal.last_error()}")
-            logger.critical("Order Send error")
+            logger.critical("Unidentified error, server result is None")
         if result.retcode != mt5.TRADE_RETCODE_DONE:
-
-            logger.critical(f"RETCODE: {result.retcode}")
-            logger.critical(f"Request: {r}")
-            logger.critical(f"{self.terminal.last_error()}")
-            logger.critical("Order Send error")
-            return None
-
+            raise exceptions.ServerStatusError(result.retcode)
         ticket = result.order
+        logger.info(f"Order was successfully send with ticket {ticket}. Order params:\n {r}")
         return ticket
 
 
