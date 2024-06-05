@@ -1,10 +1,11 @@
 import time
+from typing import Any
 
 import MetaTrader5 as mt5
 from datetime import datetime, timedelta
 
 from MetaTrader5 import Tick
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, validator
 from enum import Enum
 from utils import exceptions
 from utils.logger_config import logger
@@ -59,18 +60,20 @@ class BaseSignal(BaseModel):
     symbol: str
     entry: str
     tp: str
-    sl: float
+    sl: float | str
     sl_type: StoplossType
-    risk: float
+    risk: float | str
     direction: OrderDirection
     open_time: str | None
     close_time: str | None
     status: Status = Status.init
     ticket: int = None
 
+
     def __init__(self, **data):
         super().__init__(**data)
         self.info()
+
 
     def info(self):
         self.update()
@@ -86,7 +89,6 @@ class BaseSignal(BaseModel):
         ...
 
     def get_stoploss(self, price, points):
-        logger.info("Get Stoploss function")
         if self.direction == OrderDirection.long:
             if self.sl_type == StoplossType.percentage:
                 return price - (price * 0.01 * self.sl)
@@ -143,7 +145,7 @@ class BaseSignal(BaseModel):
             sl=sl,
             volume=volume,
             magic=self.magic,
-            comment="test"
+            comment=self.__class__.__name__
         )
 
     def response_close(self):
@@ -236,7 +238,7 @@ class ShortTermSignal(BaseSignal):
         :param _time: datetime variable from what date start gathering
         :return: Count of working days (bars that have minimum 1 tick volume)
         """
-        logger.info(f"Will get rates from {_time} to {datetime.now()}")
+
         rates = terminal.copy_rates_range(
             self.symbol,
             terminal.TIMEFRAME_D1,
@@ -300,6 +302,7 @@ class BreakoutSignal(BaseSignal):
     end_day: int = None
     prev_high: float = None
     prev_low: float = None
+    signal_time: datetime = None
 
     def __init__(self, **data):
         super().__init__(**data)
@@ -319,7 +322,7 @@ class BreakoutSignal(BaseSignal):
     def check(self, terminal: mt5) -> ResponseOpen | ResponseClose | None:
         if self.prev_high is None or self.prev_low is None:
             prev_bar = terminal.copy_rates_from_pos(self.symbol,
-                                                    terminal.TIMEFRAME_M15,
+                                                    terminal.TIMEFRAME_M1,
                                                     1, 1)[0]
             self.prev_high = prev_bar[2]
             self.prev_low = prev_bar[3]
@@ -336,19 +339,22 @@ class BreakoutSignal(BaseSignal):
                         else f"send request ask price{tick.ask} < {self.prev_low}"
                     )
                     logger.info(message)
+                    #self.signal_time = datetime.now()
+                    if self.tp == "1 TD":
+                        self.signal_time = datetime.now() + timedelta(minutes=15)
+                    else:
+                        self.signal_time = datetime.now() + timedelta(minutes=30)
                     return self.response_open(terminal)
 
         if self.status is Status.open:
-            signal_time = datetime(
-                year=datetime.now().year,
-                month=self.month,
-                day=1
-            )
-            work_day_in_month = self.get_signal_trading_days(
-                terminal,
-                signal_time
-            )
-            if work_day_in_month > self.end_day:
+
+            # work_day_in_month = self.get_signal_trading_days(
+            #     terminal,
+            #     self.signal_time
+            # )
+            #
+            # if work_day_in_month > self.end_day:
+            if datetime.now() > self.signal_time:
                 return self.response_close()
 
     def get_signal_trading_days(
