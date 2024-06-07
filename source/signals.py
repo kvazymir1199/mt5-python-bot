@@ -68,6 +68,7 @@ class BaseSignal(BaseModel):
     close_time: str | None
     status: Status = Status.init
     ticket: int = None
+    counter:int = 0
 
 
     def __init__(self, **data):
@@ -84,6 +85,7 @@ class BaseSignal(BaseModel):
 
     def update(self):
         ...
+
 
     def check(self, terminal) -> ResponseOpen | ResponseClose | None:
         ...
@@ -318,11 +320,27 @@ class BreakoutSignal(BaseSignal):
 
     def info(self):
         ...
+    def check_counter(self,terminal):
+        self.counter += 1
+        if self.counter > 360:
+            self.counter = 0
+            work_day_in_month = self.get_signal_trading_days(
+                terminal,
+                self.signal_time
+            )
+
+            logger.info(
+                (f"{self.__class__.__name__} trade with magic"
+                 f"[{self.magic}] has been opened on {self.signal_time.strftime('%Y-%m-%d %H:%M')} with the duration of {self.end_day} TD."
+                 f"Left {work_day_in_month} TD")
+            )
 
     def check(self, terminal: mt5) -> ResponseOpen | ResponseClose | None:
+
+
         if self.prev_high is None or self.prev_low is None:
             prev_bar = terminal.copy_rates_from_pos(self.symbol,
-                                                    terminal.TIMEFRAME_M1,
+                                                    terminal.TIMEFRAME_D1,
                                                     1, 1)[0]
             self.prev_high = prev_bar[2]
             self.prev_low = prev_bar[3]
@@ -339,23 +357,19 @@ class BreakoutSignal(BaseSignal):
                         else f"send request ask price{tick.ask} < {self.prev_low}"
                     )
                     logger.info(message)
-                    #self.signal_time = datetime.now()
-                    if self.tp == "1 TD":
-                        self.signal_time = datetime.now() + timedelta(minutes=15)
-                    else:
-                        self.signal_time = datetime.now() + timedelta(minutes=30)
+                    self.signal_time = datetime.now()
                     return self.response_open(terminal)
 
         if self.status is Status.open:
+            self.check_counter(terminal)
+            work_day_in_month = self.get_signal_trading_days(
+                terminal,
+                self.signal_time
+            )
 
-            # work_day_in_month = self.get_signal_trading_days(
-            #     terminal,
-            #     self.signal_time
-            # )
-            #
-            # if work_day_in_month > self.end_day:
-            if datetime.now() > self.signal_time:
-                return self.response_close()
+            if work_day_in_month > self.end_day:
+                if datetime.now() > self.signal_time:
+                    return self.response_close()
 
     def get_signal_trading_days(
             self,
