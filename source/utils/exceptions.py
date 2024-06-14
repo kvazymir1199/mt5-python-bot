@@ -24,3 +24,4 @@ class ServerStatusError(Exception):
         super().__init__(f"An error has occurred when expert was trying open a position: \n"
                          f"Error number: {status_code}\n"
                          f"Error description: {server_status_code.SERVER_STATUS_CODE.get(status_code)}\n")
+        self.status_code = status_code
