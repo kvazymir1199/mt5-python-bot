@@ -162,7 +162,8 @@ class SeasonalSignal(BaseSignal):
     close_time_d: datetime | None = None
 
     def update(self):
-        self.open_time_d = self.get_start_time()
+        if self.open_time_d is None:
+            self.open_time_d = self.get_start_time()
         self.close_time_d = self.get_close_time()
 
     def get_start_time(self) -> datetime:
@@ -176,7 +177,7 @@ class SeasonalSignal(BaseSignal):
             self.entry,
             self.open_time
         )
-        start_time_with_delta = start_time + timedelta(days=5)
+        start_time_with_delta = start_time
         if current_time > start_time_with_delta:
             start_time = start_time.replace(year=start_time.year + 1)
         return start_time
@@ -278,7 +279,7 @@ class ShortTermSignal(BaseSignal):
             terminal,
             signal_date
         )
-        logger.info(f"Trading days in month {work_day_in_month}")
+        #logger.info(f"Trading days in month {work_day_in_month}")
         condition = (work_day_in_month >= self.start_day
                      if self.status == Status.init
                      else work_day_in_month >= self.end_day)

@@ -1,9 +1,9 @@
-from typing import Callable, Type
+from typing import Callable,Optional
 from functools import wraps
 import MetaTrader5 as mt5
 from MetaTrader5 import AccountInfo, SymbolInfo, OrderSendResult
 from pydantic import ValidationError
-
+from datetime import datetime,timedelta
 from utils.logger_config import logger
 from pathlib import Path
 import csv
@@ -64,7 +64,7 @@ class Expert:
     """
     terminal = mt5
     path = os.getenv("TERMINAL_PATH")
-
+    last_error = None
 
     def __init__(self):
         """
@@ -88,7 +88,6 @@ class Expert:
                 reader = csv.DictReader(file, delimiter=";")
                 for data in reader:
                     try:
-                        # Уведомлять об обновлении
                         magic = int(data["Magic Number"])
                         for signal in self.signals:
                             if signal.magic == magic:
@@ -96,6 +95,8 @@ class Expert:
                                 break
                         else:
                             signal = self.create(data)
+                            signal_status = self.order_exists(data)
+                            signal.status,signal.ticket = signal_status
                             self.signals.append(signal)
 
                     except ValidationError as e:
@@ -106,6 +107,7 @@ class Expert:
             logger.critical(f"An error occurred: {e}")
 
     def create(self, data: dict):
+
         signal = self.parse_signal_type(
             data.get("Type")
         )
@@ -122,7 +124,7 @@ class Expert:
             entry=data['Entry'],
             tp=data["TP"],
             sl=f(data['SL']),
-            sl_type=StoplossType.percentage if data['SL Type'] == "Percentage" else  StoplossType.points,
+            sl_type=StoplossType.percentage if data['SL Type'] == "Percentage" else StoplossType.points,
             risk=f(data['Risk']),
             direction= OrderDirection.long if data['Direction'] == "Long" else OrderDirection.short,
             open_time=data['Open Time'] if data['Open Time'] else None,
@@ -142,6 +144,26 @@ class Expert:
         signal.open_time = data['Open Time'] if data['Open Time'] else None
         signal.close_time = data['Close Time'] if data['Close Time'] else None
         signal.update()
+
+    def order_exists(self,data:dict):
+        """ Function check signal by magic and symbol in open and history orders.
+        If signal wasn't founded, return True,else False"""
+        symbol = data.get("Symbol")
+        magic = int(data.get("Magic Number"))
+        orders = tuple(filter(lambda order: order.magic == int(magic), self.terminal.positions_get(symbol=symbol)))
+        if not orders:
+            from_date = datetime.now() - timedelta(days=365)
+            to_date = datetime.now() + timedelta(days=2)
+            logger.info(f"Will check {magic} from {from_date} to {datetime.now()}")
+            orders = self.terminal.history_deals_get(from_date, to_date)
+            orders = tuple(filter(lambda order: order.magic == int(magic) and order.symbol == symbol,orders))
+            print(f"List of open deals filter by magic={magic}:\n found {len(orders)} orders")
+            if not orders:
+                logger.info(f"Not found order with this magic")
+                return Status.init, None
+        else:
+            return Status.open, orders[-1].ticket
+        return Status.close,None
 
     @staticmethod
     def parse_signal_type(signal_type: str):
@@ -216,7 +238,10 @@ class Expert:
                     logger.info(f"Order with ticket: {request.ticket} was successfully closed")
                     signal.status = Status.close
         except Exception as e:
-            logger.error(e)
+
+            if self.last_error != e.status_code:
+                logger.error(e)
+                self.last_error = e.status_code
 
     def send_request(self, request: ResponseOpen) -> int | None:
         filling_type = self.get_filling_mode(request.symbol)
