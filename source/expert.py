@@ -154,12 +154,12 @@ class Expert:
         if not orders:
             from_date = datetime.now() - timedelta(days=365)
             to_date = datetime.now() + timedelta(days=2)
-            logger.info(f"Will check {magic} from {from_date} to {datetime.now()}")
+            #logger.info(f"Will check {magic} from {from_date} to {datetime.now()}")
             orders = self.terminal.history_deals_get(from_date, to_date)
             orders = tuple(filter(lambda order: order.magic == int(magic) and order.symbol == symbol,orders))
-            print(f"List of open deals filter by magic={magic}:\n found {len(orders)} orders")
+            #print(f"List of open deals filter by magic={magic}:\n found {len(orders)} orders")
             if not orders:
-                logger.info(f"Not found order with this magic")
+                #logger.info(f"Not found order with this magic")
                 return Status.init, None
         else:
             return Status.open, orders[-1].ticket
