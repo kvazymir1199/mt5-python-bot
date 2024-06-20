@@ -279,10 +279,16 @@ class ShortTermSignal(BaseSignal):
             terminal,
             signal_date
         )
-        #logger.info(f"Trading days in month {work_day_in_month}")
-        condition = (work_day_in_month >= self.start_day
-                     if self.status == Status.init
-                     else work_day_in_month >= self.end_day)
+        match self.status:
+            case Status.init:
+                condition = work_day_in_month >= self.start_day and self.month == datetime.now().month
+            case Status.open:
+                condition = work_day_in_month >= self.end_day
+            case Status.close:
+                condition = False
+        # condition = (work_day_in_month >= self.start_day
+        #              if self.status == Status.init
+        #              else work_day_in_month >= self.end_day)
         if not condition: return None
 
         signal_time = self.get_parse_time(
@@ -337,8 +343,6 @@ class BreakoutSignal(BaseSignal):
             )
 
     def check(self, terminal: mt5) -> ResponseOpen | ResponseClose | None:
-
-
         if self.prev_high is None or self.prev_low is None:
             prev_bar = terminal.copy_rates_from_pos(self.symbol,
                                                     terminal.TIMEFRAME_D1,
