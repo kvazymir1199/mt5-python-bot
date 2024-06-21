@@ -195,8 +195,8 @@ class SeasonalSignal(BaseSignal):
 
     def check(self, terminal) -> ResponseOpen | ResponseClose | None:
         current_time = datetime.now()
-
         if self.status is Status.init:
+
             if current_time > self.open_time_d:
                 return self.response_open(terminal)
 
@@ -279,8 +279,10 @@ class ShortTermSignal(BaseSignal):
             terminal,
             signal_date
         )
+        print(f"Working day in month: {work_day_in_month}")
         match self.status:
             case Status.init:
+
                 condition = work_day_in_month >= self.start_day and self.month == datetime.now().month
             case Status.open:
                 condition = work_day_in_month >= self.end_day
@@ -345,12 +347,12 @@ class BreakoutSignal(BaseSignal):
     def check(self, terminal: mt5) -> ResponseOpen | ResponseClose | None:
         if self.prev_high is None or self.prev_low is None:
             prev_bar = terminal.copy_rates_from_pos(self.symbol,
-                                                    terminal.TIMEFRAME_D1,
+                                                    terminal.TIMEFRAME_MN1,
                                                     1, 1)[0]
             self.prev_high = prev_bar[2]
             self.prev_low = prev_bar[3]
         if self.status is Status.init:
-            if datetime.now() > self.start_day:
+            if datetime.now() > self.start_day and self.month == datetime.now().month:
                 tick: Tick = terminal.symbol_info_tick(self.symbol)
                 condition = (tick.bid > self.prev_high
                              if self.entry == "PMH"

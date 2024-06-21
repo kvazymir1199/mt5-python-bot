@@ -227,6 +227,7 @@ class Expert:
         request: ResponseOpen | ResponseClose | None = signal.check(
             terminal=self.terminal
         )
+        print(request)
         if request is None: return
         try:
             if isinstance(request, ResponseOpen):
