@@ -1,2 +1,3 @@
 Magic Number;Month;Symbol;Entry;TP;SL;SL Type;Risk;Direction;Type;Open Time;Close Time
-190514;6;AUDUSD;12.06;12.06;2.39;Percentage;1;Short;Seasonal;19:00;13:55
+
+1101;6;EURUSD;16 TDOM;16 TDOM;5;Percentage;0.5;Long;Short-term;11:56;11:57
