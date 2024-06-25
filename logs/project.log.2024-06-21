@@ -1,0 +1,53 @@
+2024-06-21 11:17:45 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-21 11:17:45 [INFO] utils.logger_config: Signal SeasonalSignal was succsessfuly created
+2024-06-21 11:17:45 [INFO] utils.logger_config: SeasonalSignal time: 2024-06-21 11:20:00
+2024-06-21 11:17:45 [INFO] utils.logger_config: SeasonalSignal end time: 2024-06-21 11:21:00
+2024-06-21 11:21:39 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-21 11:21:39 [INFO] utils.logger_config: Signal SeasonalSignal was succsessfuly created
+2024-06-21 11:21:39 [INFO] utils.logger_config: SeasonalSignal time: 2025-06-21 11:20:00
+2024-06-21 11:21:39 [INFO] utils.logger_config: SeasonalSignal end time: 2025-06-21 11:21:00
+2024-06-21 11:21:54 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-21 11:21:54 [INFO] utils.logger_config: Signal SeasonalSignal was succsessfuly created
+2024-06-21 11:21:54 [INFO] utils.logger_config: SeasonalSignal time: 2024-06-21 11:22:00
+2024-06-21 11:21:54 [INFO] utils.logger_config: SeasonalSignal end time: 2024-06-21 11:23:00
+2024-06-21 11:23:13 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-21 11:23:13 [INFO] utils.logger_config: Signal SeasonalSignal was succsessfuly created
+2024-06-21 11:23:13 [INFO] utils.logger_config: SeasonalSignal time: 2024-06-21 11:24:00
+2024-06-21 11:23:13 [INFO] utils.logger_config: SeasonalSignal end time: 2024-06-21 11:25:00
+2024-06-21 11:25:12 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-21 11:25:12 [INFO] utils.logger_config: Signal SeasonalSignal was succsessfuly created
+2024-06-21 11:25:12 [INFO] utils.logger_config: SeasonalSignal time: 2024-06-21 11:27:00
+2024-06-21 11:25:12 [INFO] utils.logger_config: SeasonalSignal end time: 2024-06-21 11:28:00
+2024-06-21 11:27:02 [INFO] utils.logger_config: Order was successfully send with ticket 1176636682. Order params:
+ {'action': 1, 'symbol': 'AUDUSD', 'volume': 0.31, 'type': 1, 'price': 0.66673, 'deviation': 50, 'sl': 0.68266, 'magic': 190515, 'comment': 'python script open', 'type_time': 0, 'type_filling': 0}
+2024-06-21 11:27:25 [INFO] utils.logger_config: Start create new signal SeasonalSignal
+2024-06-21 11:27:25 [INFO] utils.logger_config: Signal SeasonalSignal was succsessfuly created
+2024-06-21 11:27:25 [INFO] utils.logger_config: SeasonalSignal time: 2024-06-21 11:30:00
+2024-06-21 11:27:25 [INFO] utils.logger_config: SeasonalSignal end time: 2024-06-21 11:31:00
+2024-06-21 11:30:03 [INFO] utils.logger_config: Order was successfully send with ticket 1176636738. Order params:
+ {'action': 1, 'symbol': 'AUDUSD', 'volume': 0.31, 'type': 1, 'price': 0.66672, 'deviation': 50, 'sl': 0.68265, 'magic': 190516, 'comment': 'python script open', 'type_time': 0, 'type_filling': 0}
+2024-06-21 11:44:58 [CRITICAL] utils.logger_config: An error occurred: invalid literal for int() with base 10: '31С†'
+2024-06-21 11:44:59 [CRITICAL] utils.logger_config: An error occurred: invalid literal for int() with base 10: '31С†'
+2024-06-21 11:45:00 [CRITICAL] utils.logger_config: An error occurred: invalid literal for int() with base 10: '31С†'
+2024-06-21 11:45:01 [CRITICAL] utils.logger_config: An error occurred: invalid literal for int() with base 10: '31С†'
+2024-06-21 11:45:02 [CRITICAL] utils.logger_config: An error occurred: invalid literal for int() with base 10: '31С†'
+2024-06-21 11:45:03 [CRITICAL] utils.logger_config: An error occurred: invalid literal for int() with base 10: '31С†'
+2024-06-21 11:45:04 [CRITICAL] utils.logger_config: An error occurred: invalid literal for int() with base 10: '31С†'
+2024-06-21 11:47:17 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-21 11:47:17 [CRITICAL] utils.logger_config: An error occurred: Symbol: S&P 500 not found in Broker symbols. Check symbol field in csv file
+2024-06-21 11:47:17 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-21 11:47:17 [CRITICAL] utils.logger_config: An error occurred: Symbol: S&P 500 not found in Broker symbols. Check symbol field in csv file
+2024-06-21 11:47:18 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-21 11:47:18 [CRITICAL] utils.logger_config: An error occurred: Symbol: S&P 500 not found in Broker symbols. Check symbol field in csv file
+2024-06-21 11:47:19 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-21 11:47:19 [CRITICAL] utils.logger_config: An error occurred: Symbol: S&P 500 not found in Broker symbols. Check symbol field in csv file
+2024-06-21 11:47:20 [CRITICAL] utils.logger_config: Signal ShortTermSignal was not created.
+2024-06-21 11:47:20 [CRITICAL] utils.logger_config: An error occurred: Symbol: S&P 500 not found in Broker symbols. Check symbol field in csv file
+2024-06-21 11:47:31 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-21 11:50:01 [INFO] utils.logger_config: Return responce open
+2024-06-21 11:50:04 [INFO] utils.logger_config: Order was successfully send with ticket 1176637028. Order params:
+ {'action': 1, 'symbol': 'EURUSD', 'volume': 0.05, 'type': 0, 'price': 1.07177, 'deviation': 50, 'sl': 1.01818, 'magic': 110, 'comment': 'python script open', 'type_time': 0, 'type_filling': 0}
+2024-06-21 11:53:54 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-21 11:54:36 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-21 11:55:53 [INFO] utils.logger_config: Start create new signal ShortTermSignal
+2024-06-21 19:55:50 [INFO] utils.logger_config: Start create new signal BreakoutSignal
