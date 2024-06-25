@@ -354,9 +354,10 @@ class BreakoutSignal(BaseSignal):
         if self.status is Status.init:
             if datetime.now() > self.start_day and self.month == datetime.now().month:
                 tick: Tick = terminal.symbol_info_tick(self.symbol)
-                condition = (tick.bid > self.prev_high
-                             if self.entry == "PMH"
-                             else tick.ask < self.prev_low)
+                # condition = (tick.bid > self.prev_high
+                #              if self.entry == "PMH"
+                #              else tick.ask < self.prev_low)
+                condition = True
                 if condition:
                     message = (
                         f"{self} send request bid price: {tick.bid} > {self.prev_high}"
@@ -369,11 +370,15 @@ class BreakoutSignal(BaseSignal):
 
         if self.status is Status.open:
             self.check_counter(terminal)
+            if self.signal_time is None:
+                pos_time:tuple(mt5.TradePosition) = terminal.positions_get(ticket=self.ticket)
+                self.signal_time = datetime.fromtimestamp(pos_time[0].time)
+                self.signal_time = datetime(self.signal_time.year,self.signal_time.month,self.signal_time.day)
             work_day_in_month = self.get_signal_trading_days(
                 terminal,
                 self.signal_time
             )
-
+            print(work_day_in_month)
             if work_day_in_month > self.end_day:
                 if datetime.now() > self.signal_time:
                     return self.response_close()

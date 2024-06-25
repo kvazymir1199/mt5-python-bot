@@ -1,3 +1,3 @@
 Magic Number;Month;Symbol;Entry;TP;SL;SL Type;Risk;Direction;Type;Open Time;Close Time
 
-1101;6;EURUSD;16 TDOM;16 TDOM;5;Percentage;0.5;Long;Short-term;11:56;11:57
+1203;6;EURUSD;PML;15 TD;150;Points;3;Long;Breakout;;
