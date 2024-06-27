@@ -165,6 +165,15 @@ class SeasonalSignal(BaseSignal):
         if self.open_time_d is None:
             self.open_time_d = self.get_start_time()
         self.close_time_d = self.get_close_time()
+        # if self.ticket:
+        #     print("ticket was founded")
+        #     print(f"{self.open_time_d} | {self.close_time_d}")
+        #     self.open_time_d = self.open_time_d.replace(year=self.open_time_d.year - 1)
+        #     self.close_time_d = self.close_time_d.replace(year=self.close_time_d.year - 1)
+        #
+        #     if self.open_time_d > self.close_time_d:
+        #         print("check")
+        #         self.close_time_d = self.close_time_d.replace(year=self.close_time_d.year + 1)
 
     def get_start_time(self) -> datetime:
         """
@@ -177,7 +186,8 @@ class SeasonalSignal(BaseSignal):
             self.entry,
             self.open_time
         )
-        start_time_with_delta = start_time
+        start_time_with_delta = start_time + timedelta(minutes=1)
+
         if current_time > start_time_with_delta:
             start_time = start_time.replace(year=start_time.year + 1)
         return start_time
@@ -188,7 +198,8 @@ class SeasonalSignal(BaseSignal):
             self.tp,
             self.close_time
         )
-        if start_data > end_time:
+
+        if datetime.now() > end_time and self.close_time_d is None:
             end_time = end_time.replace(year=end_time.year + 1)
 
         return end_time
@@ -201,6 +212,7 @@ class SeasonalSignal(BaseSignal):
                 return self.response_open(terminal)
 
         elif self.status is Status.open:
+
             if current_time > self.close_time_d:
                 return self.response_close()
 
@@ -331,7 +343,7 @@ class BreakoutSignal(BaseSignal):
         ...
     def check_counter(self,terminal):
         self.counter += 1
-        if self.counter > 360:
+        if self.counter > 3600*24:
             self.counter = 0
             work_day_in_month = self.get_signal_trading_days(
                 terminal,
@@ -377,8 +389,8 @@ class BreakoutSignal(BaseSignal):
             work_day_in_month = self.get_signal_trading_days(
                 terminal,
                 self.signal_time
-            )
-            print(work_day_in_month)
+            ) + 1
+
             if work_day_in_month > self.end_day:
                 if datetime.now() > self.signal_time:
                     return self.response_close()
