@@ -294,7 +294,6 @@ class ShortTermSignal(BaseSignal):
         print(f"Working day in month: {work_day_in_month}")
         match self.status:
             case Status.init:
-
                 condition = work_day_in_month >= self.start_day and self.month == datetime.now().month
             case Status.open:
                 condition = work_day_in_month >= self.end_day
