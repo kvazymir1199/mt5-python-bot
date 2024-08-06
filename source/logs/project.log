@@ -1,0 +1,17 @@
+2024-08-02 15:11:48 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-08-02 15:11:48 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-08-02 15:11:48 [INFO] utils.logger_config: magic=120801 month=8 symbol='XAUUSD' entry='PMH' tp='15 TD' sl=3000.0 sl_type=<StoplossType.points: 1> risk=0.25 direction=<OrderDirection.long: 0> open_time=None close_time=None status=<Status.init: 1> ticket=None counter=0 start_day=datetime.datetime(2024, 8, 1, 0, 0) end_day=15 prev_high=2483.67 prev_low=2318.49 signal_time=None send request bid price: 2461.54 > 2483.67
+2024-08-02 15:11:50 [ERROR] utils.logger_config: An error has occurred when expert was trying open a position: 
+Error number: 10027
+Error description: Автотрейдинг запрещен клиентским терминалом
+
+2024-08-02 15:11:50 [INFO] utils.logger_config: send request ask price547.62 < 530.23
+2024-08-02 15:11:52 [INFO] utils.logger_config: magic=120801 month=8 symbol='XAUUSD' entry='PMH' tp='15 TD' sl=3000.0 sl_type=<StoplossType.points: 1> risk=0.25 direction=<OrderDirection.long: 0> open_time=None close_time=None status=<Status.init: 1> ticket=None counter=0 start_day=datetime.datetime(2024, 8, 1, 0, 0) end_day=15 prev_high=2483.67 prev_low=2318.49 signal_time=datetime.datetime(2024, 8, 2, 15, 11, 48, 623603) send request bid price: 2461.58 > 2483.67
+2024-08-02 15:11:54 [INFO] utils.logger_config: send request ask price547.82 < 530.23
+2024-08-02 15:11:57 [INFO] utils.logger_config: Order was successfully send with ticket 169007040. Order params:
+ {'action': 1, 'symbol': 'WHEAT.c', 'volume': 5.0, 'type': 1, 'price': 546.68, 'deviation': 50, 'sl': 591.68, 'magic': 120802, 'comment': 'python script open', 'type_time': 0, 'type_filling': 0}
+2024-08-02 15:11:58 [INFO] utils.logger_config: magic=120801 month=8 symbol='XAUUSD' entry='PMH' tp='15 TD' sl=3000.0 sl_type=<StoplossType.points: 1> risk=0.25 direction=<OrderDirection.long: 0> open_time=None close_time=None status=<Status.init: 1> ticket=None counter=0 start_day=datetime.datetime(2024, 8, 1, 0, 0) end_day=15 prev_high=2483.67 prev_low=2318.49 signal_time=datetime.datetime(2024, 8, 2, 15, 11, 52, 650497) send request bid price: 2461.38 > 2483.67
+2024-08-02 15:12:00 [INFO] utils.logger_config: Order was successfully send with ticket 169007048. Order params:
+ {'action': 1, 'symbol': 'XAUUSD', 'volume': 0.08, 'type': 0, 'price': 2461.54, 'deviation': 50, 'sl': 2431.54, 'magic': 120801, 'comment': 'python script open', 'type_time': 0, 'type_filling': 0}
+2024-08-02 15:15:02 [INFO] utils.logger_config: Start create new signal BreakoutSignal
+2024-08-02 15:15:02 [INFO] utils.logger_config: Start create new signal BreakoutSignal

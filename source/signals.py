@@ -362,13 +362,15 @@ class BreakoutSignal(BaseSignal):
                                                     1, 1)[0]
             self.prev_high = prev_bar[2]
             self.prev_low = prev_bar[3]
+            # print("info: ",self.prev_high)
+            # print("info: ",self.prev_low)
         if self.status is Status.init:
             if datetime.now() > self.start_day and self.month == datetime.now().month:
                 tick: Tick = terminal.symbol_info_tick(self.symbol)
-                # condition = (tick.bid > self.prev_high
-                #              if self.entry == "PMH"
-                #              else tick.ask < self.prev_low)
-                condition = True
+                condition = (tick.bid > self.prev_high
+                             if self.entry == "PMH"
+                             else tick.ask < self.prev_low)
+
                 if condition:
                     message = (
                         f"{self} send request bid price: {tick.bid} > {self.prev_high}"

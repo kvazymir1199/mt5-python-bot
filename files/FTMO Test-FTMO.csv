@@ -1,4 +1,3 @@
 Magic Number;Month;Symbol;Entry;TP;SL;SL Type;Risk;Direction;Type;Open Time;Close Time
-147;6;EURUSD;27.06;27.06;2.39;Percentage;1;Short;Seasonal;11:20;11:25
-150;6;EURUSD;27.06;27.06;2.39;Percentage;1;Short;Seasonal;11:28;11:37
-149;6;EURUSD;27.06;27.06;2.39;Percentage;1;Short;Seasonal;11:30;11:50
+120802;8;XAUUSD;PMH;15 TD;3000;Points;0,25;Long; Breakout;;
+120804;8;WHEAT.c;PML;10 TD;4500; Points;0,25;Short; Breakout;;
